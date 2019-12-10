@@ -7,4 +7,9 @@ public class TestVIPController {
         List<string> result = VIPController.readVips();
         System.assert(!result.isEmpty());
     }
+
+    @isTest
+    public static void newtest() {
+        System.assert(true);
+    }
 }
