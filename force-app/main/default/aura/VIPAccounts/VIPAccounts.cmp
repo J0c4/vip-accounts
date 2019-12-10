@@ -1,0 +1,35 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForRecordHome" controller='VIPController'>
+	<aura:attribute name="accountRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="vipAccs" type="string[]"/>
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="Name,Description,Phone,Industry,VIP__c"
+    targetFields="{!v.accountRecord}"
+    targetError="{!v.recordLoadError}"
+    />
+    
+    <div> 
+        <lightning:card iconName="standard:account" title="{!v.accountRecord.Name}" >
+            <div class="slds-p-horizontal--small">
+                <p class="slds-text-heading--medium"><lightning:formattedPhone title="Phone" value="{!v.accountRecord.Phone}" /></p>
+                <p class="slds-truncate">
+                    <aura:if isTrue="{!v.accountRecord.VIP__c}">
+    					This is a VIP customer
+    				<aura:set attribute="else">
+      					Normal
+    				</aura:set>
+                    </aura:if>
+                    <p>
+                    Similar accounts:
+                    <lightning:button label="See vips" onclick="{!c.getVips}"/>
+                    <aura:iteration items="{!v.vipAccs}" var="vipAcc">
+                        <p>{!vipAcc}</p>
+                    </aura:iteration>
+                    </p>
+               </p>
+            </div>
+        </lightning:card>
+    </div>
+</aura:component>
